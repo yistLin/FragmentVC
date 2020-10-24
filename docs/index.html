@@ -1,1 +1,41 @@
-<h1>FragmentVC</h1>
+<!doctype html>
+<html>
+
+<head>
+    <title>FragmentVC Demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Audio & Attention Map Demo</h1>
+            <p class="lead">FRAGMENTVC: ANY-TO-ANY VOICE CONVERSION BY END-TO-END EXTRACTING AND FUSING FINE-GRAINED VOICE FRAGMENTS WITH ATTENTION</p>
+            <hr class="my-4">
+            <p style="text-align: justify; text-justify: inter-word;">
+                <b>Abstract:</b>
+                Any-to-any voice conversion aims to convert the voice from and to any speakers even unseen during training, which is much more challenging compared to one-to-one or many-to-many tasks, but much more attractive in real-world scenarios.
+                In this paper we proposed FragmentVC, in which the latent phonetic structure of the utterance from the source speaker is obtained from Wav2Vec 2.0, while the spectral features of the utterance(s) from the target speaker are obtained from log mel-spectrograms.
+                By aligning the hidden structures of the two different feature spaces with a two-stage training process, FragmentVC is able to extract fine-grained voice fragments from the target speaker utterance(s) and fuse them into the desired utterance, all based on the attention mechanism of Transformer as verified with analysis on attention maps, and is accomplished end-to-end.
+                This approach is trained with reconstruction loss only without any disentanglement considerations between content and speaker information and doesn't require parallel data.
+                Objective evaluation based on speaker verification and subjective evaluation with MOS both showed that this approach outperformed SOTA approaches, such as AdaIN-VC and AutoVC.
+            </p>
+            <p>
+                <a href="#" type="button" class="btn btn-dark">GitHub (Source Code)</a>
+                <a href="#" type="button" class="btn btn-danger">ArXiv (Paper)</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+        <p>Hello world!</p>
+    </div>
+
+    <div class="container" style="padding-top: 60px;">
+        <p class="text-center text-muted">&copy; 台大語音實驗室</p>
+    </div>
+</body>
+
+</html>
