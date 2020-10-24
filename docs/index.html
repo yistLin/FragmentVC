@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -23,14 +24,63 @@
                 Objective evaluation based on speaker verification and subjective evaluation with MOS both showed that this approach outperformed SOTA approaches, such as AdaIN-VC and AutoVC.
             </p>
             <p>
-                <a href="#" type="button" class="btn btn-dark">GitHub (Source Code)</a>
-                <a href="#" type="button" class="btn btn-danger">ArXiv (Paper)</a>
+                <a href="https://github.com/yistLin/FragmentVC" type="button" class="btn btn-dark">GitHub (Source Code)</a>
+                <a href="#" type="button" class="btn btn-danger">arXiv (Paper)</a>
             </p>
         </div>
     </div>
 
     <div class="container">
-        <p>Hello world!</p>
+        <table>
+            <tr>
+                <td></td>
+                <th colspan="2">Source utterance</th>
+            </tr>
+            <tr>
+                <td><i>p225_001</i></td>
+                <td colspan="2">
+                    <audio src="audio/chou/pair-070/content.wav" controls preload></audio>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <th>Speaker utterance</th>
+                <th>Conversion result</th>
+            </tr>
+            <tr>
+                <td>
+                    <i>p287_286</i>
+                </td>
+                <td>
+                    <audio src="audio/chou/pair-070/ori_input.wav" controls preload></audio>
+                </td>
+                <td>
+                    <audio src="audio/chou/pair-070/ori_output.wav" controls preload></audio>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <i>p287_286</i>
+                </td>
+                <td>
+                    <audio src="audio/chou/pair-070/adv_input_0dot05.wav" controls preload></audio>
+                </td>
+                <td>
+                    <audio src="audio/chou/pair-070/adv_output_0dot05.wav" controls preload></audio>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <i>p287_286</i>
+                </td>
+                <td>
+                    <audio src="audio/chou/pair-070/adv_input_0dot1.wav" controls preload></audio>
+                </td>
+                <td>
+                    <audio src="audio/chou/pair-070/adv_output_0dot1.wav" controls preload></audio>
+                </td>
+            </tr>
+        </table>
     </div>
 
     <div class="container" style="padding-top: 60px;">

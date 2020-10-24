@@ -1,0 +1,11 @@
+audio {
+    border-radius: 0%;
+}
+table {
+    text-align: center;
+    border-collapse: collapse;
+    overflow: hidden!important;
+} 
+td,th {
+    border: none!important;
+}
