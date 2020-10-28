@@ -1,4 +1,5 @@
-"""Useful utilities in creating models."""
+"""Useful utilities."""
+
 import math
 
 import torch

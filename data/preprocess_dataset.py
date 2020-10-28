@@ -1,4 +1,5 @@
-"""Preprocess audio while loading."""
+"""Precompute Wav2Vec features and spectrograms."""
+
 from copy import deepcopy
 from pathlib import Path
 

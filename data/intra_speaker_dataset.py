@@ -13,7 +13,7 @@ from torch.nn.utils.rnn import pad_sequence
 
 class IntraSpeakerDataset(Dataset):
     """Dataset for reconstruction scheme.
-    
+
     Returns:
         speaker_id: speaker id number.
         feat: Wav2Vec feature tensor.

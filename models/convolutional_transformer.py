@@ -1,4 +1,5 @@
-"""Feed-forward transsformer"""
+"""Convolutional transsformer"""
+
 from typing import Optional, Tuple
 
 import torch.nn.functional as F
@@ -9,9 +10,7 @@ from torch.nn import Module, Dropout, LayerNorm, Conv1d, MultiheadAttention
 class Smoother(Module):
     """Convolutional Transformer Encoder Layer"""
 
-    def __init__(
-        self, d_model: int, nhead: int, d_hid: int, dropout=0.1
-    ):
+    def __init__(self, d_model: int, nhead: int, d_hid: int, dropout=0.1):
         super(Smoother, self).__init__()
         self.self_attn = MultiheadAttention(d_model, nhead, dropout=dropout)
 
@@ -53,12 +52,7 @@ class Extractor(Module):
     """Convolutional Transformer Decoder Layer"""
 
     def __init__(
-        self,
-        d_model: int,
-        nhead: int,
-        d_hid: int,
-        dropout=0.1,
-        no_residual=False,
+        self, d_model: int, nhead: int, d_hid: int, dropout=0.1, no_residual=False,
     ):
         super(Extractor, self).__init__()
 
