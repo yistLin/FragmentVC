@@ -135,7 +135,7 @@ def main(
     train_iterator = iter(train_loader)
 
     if comment is not None:
-        log_dir = "logs/retriever/"
+        log_dir = "logs/"
         log_dir += datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
         log_dir += "_" + comment
         writer = SummaryWriter(log_dir)

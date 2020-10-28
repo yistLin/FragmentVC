@@ -20,7 +20,7 @@ def parse_args():
     """Parse command-line arguments."""
     parser = ArgumentParser()
     parser.add_argument("data_dirs", type=str, nargs="+")
-    parser.add_argument("ckpt_path", type=str)
+    parser.add_argument("wav2vec_path", type=str)
     parser.add_argument("out_dir", type=str)
     parser.add_argument("--trim_method", choices=["librosa", "vad"], default="vad")
     parser.add_argument("--n_workers", type=int, default=cpu_count())
@@ -39,7 +39,7 @@ def parse_args():
 
 def main(
     data_dirs,
-    ckpt_path,
+    wav2vec_path,
     out_dir,
     trim_method,
     n_workers,
@@ -78,7 +78,7 @@ def main(
         dataset, batch_size=1, shuffle=False, drop_last=False, num_workers=n_workers
     )
 
-    wav2vec = load_pretrained_wav2vec(ckpt_path).to(device)
+    wav2vec = load_pretrained_wav2vec(wav2vec_path).to(device)
 
     speaker_infos = {}
 
