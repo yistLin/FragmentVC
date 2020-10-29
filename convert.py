@@ -21,7 +21,7 @@ def parse_args():
     """Parse command-line arguments."""
     parser = ArgumentParser()
     parser.add_argument("source_path", type=str)
-    parser.add_argument("reference_paths", type=str, nargs="+")
+    parser.add_argument("target_paths", type=str, nargs="+")
     parser.add_argument("-w", "--wav2vec_path", type=str, required=True)
     parser.add_argument("-c", "--ckpt_path", type=str, required=True)
     parser.add_argument("-v", "--vocoder_path", type=str, required=True)
@@ -41,7 +41,7 @@ def parse_args():
 
 def main(
     source_path,
-    reference_paths,
+    target_paths,
     wav2vec_path,
     ckpt_path,
     vocoder_path,
@@ -83,19 +83,19 @@ def main(
     src_wav = torch.FloatTensor(src_wav).unsqueeze(0).to(device)
     print("[INFO] source waveform shape:", src_wav.shape)
 
-    ref_mels = []
-    for ref_path in reference_paths:
-        ref_wav = load_wav(ref_path, sample_rate)
-        ref_wav = tfm.build_array(input_array=ref_wav, sample_rate_in=sample_rate)
-        ref_wav = deepcopy(ref_wav)
-        ref_mel = log_mel_spectrogram(
-            ref_wav, preemph, sample_rate, n_mels, n_fft, hop_len, win_len, f_min
+    tgt_mels = []
+    for tgt_path in target_paths:
+        tgt_wav = load_wav(tgt_path, sample_rate)
+        tgt_wav = tfm.build_array(input_array=tgt_wav, sample_rate_in=sample_rate)
+        tgt_wav = deepcopy(tgt_wav)
+        tgt_mel = log_mel_spectrogram(
+            tgt_wav, preemph, sample_rate, n_mels, n_fft, hop_len, win_len, f_min
         )
-        ref_mels.append(ref_mel)
+        tgt_mels.append(tgt_mel)
 
-    ref_mel = np.concatenate(ref_mels, axis=0)
-    ref_mel = torch.FloatTensor(ref_mel.T).unsqueeze(0).to(device)
-    print("[INFO] target spectrograms shape:", ref_mel.shape)
+    tgt_mel = np.concatenate(tgt_mels, axis=0)
+    tgt_mel = torch.FloatTensor(tgt_mel.T).unsqueeze(0).to(device)
+    print("[INFO] target spectrograms shape:", tgt_mel.shape)
 
     with torch.no_grad():
         src_feat = wav2vec.extract_features(src_wav, None)[0]
@@ -105,7 +105,7 @@ def main(
         step_moment = datetime.now()
         print("[INFO] elasped time", elaspe_time.total_seconds())
 
-        out_mel, attns = model(src_feat, ref_mel)
+        out_mel, attns = model(src_feat, tgt_mel)
         out_mel = out_mel.transpose(1, 2).squeeze(0)
         print("[INFO] converted spectrogram shape:", out_mel.shape)
 

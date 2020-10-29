@@ -88,16 +88,16 @@ def main(
         src_wav = torch.FloatTensor(src_wav).unsqueeze(0).to(device)
 
         with Pool(cpu_count()) as pool:
-            wavs = pool.map(path2wav, pair["target"])
-            mels = pool.map(wav2mel, wavs)
+            tgt_wavs = pool.map(path2wav, pair["target"])
+            tgt_mels = pool.map(wav2mel, tgt_wavs)
 
-        ref_mel = np.concatenate(mels, axis=0)
-        ref_mel = torch.FloatTensor(ref_mel.T).unsqueeze(0).to(device)
+        tgt_mel = np.concatenate(tgt_mels, axis=0)
+        tgt_mel = torch.FloatTensor(tgt_mel.T).unsqueeze(0).to(device)
 
         with torch.no_grad():
             src_feat = wav2vec.extract_features(src_wav, None)[0]
 
-            out_mel, attn = model(src_feat, ref_mel)
+            out_mel, attn = model(src_feat, tgt_mel)
             out_mel = out_mel.transpose(1, 2).squeeze(0)
 
             out_mels.append(out_mel)
