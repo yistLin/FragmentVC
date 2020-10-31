@@ -29,10 +29,10 @@
 <body>
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h1 class="display-4">Audio & Attention Map Demo</h1>
+            <h1 class="display-5">Audio & Attention Map Demo</h1>
             <p class="lead">FRAGMENTVC: ANY-TO-ANY VOICE CONVERSION BY END-TO-END EXTRACTING AND FUSING FINE-GRAINED VOICE FRAGMENTS WITH ATTENTION</p>
             <hr class="my-4">
-            <p style="text-align: justify; text-justify: inter-word;">
+            <p>
                 <b>Abstract:</b>
                 Any-to-any voice conversion aims to convert the voice from and to any speakers even unseen during training, which is much more challenging compared to one-to-one or many-to-many tasks, but much more attractive in real-world scenarios.
                 In this paper we proposed FragmentVC, in which the latent phonetic structure of the utterance from the source speaker is obtained from Wav2Vec 2.0, while the spectral features of the utterance(s) from the target speaker are obtained from log mel-spectrograms.
@@ -48,56 +48,126 @@
     </div>
 
     <div class="container">
-        <table>
-            <tr>
-                <td></td>
-                <th colspan="2">Source utterance</th>
-            </tr>
-            <tr>
-                <td><i>p225_001</i></td>
-                <td colspan="2">
-                    <audio src="audio/chou/pair-070/content.wav" controls preload></audio>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <th>Speaker utterance</th>
-                <th>Conversion result</th>
-            </tr>
-            <tr>
-                <td>
-                    <i>p287_286</i>
-                </td>
-                <td>
-                    <audio src="audio/chou/pair-070/ori_input.wav" controls preload></audio>
-                </td>
-                <td>
-                    <audio src="audio/chou/pair-070/ori_output.wav" controls preload></audio>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <i>p287_286</i>
-                </td>
-                <td>
-                    <audio src="audio/chou/pair-070/adv_input_0dot05.wav" controls preload></audio>
-                </td>
-                <td>
-                    <audio src="audio/chou/pair-070/adv_output_0dot05.wav" controls preload></audio>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <i>p287_286</i>
-                </td>
-                <td>
-                    <audio src="audio/chou/pair-070/adv_input_0dot1.wav" controls preload></audio>
-                </td>
-                <td>
-                    <audio src="audio/chou/pair-070/adv_output_0dot1.wav" controls preload></audio>
-                </td>
-            </tr>
-        </table>
+        <h3>Seen-to-seen conversion</h3>
+
+        In the following sections, there are 4 conversion pairs, each containing 4 speech utterances.
+        The first 2 utterances are drawn from the CSTR VCTK Corpus:
+        <ol type="a">
+            <li>
+                An utterance from the source speaker, termed as <u>source utterance</u>
+            </li>
+            <li>
+                An utterance from the target speaker, which is of the same word transcription as the source utterance, termed as <u>authentic utterance</u>
+            </li>
+        </ol>
+
+        And the rest 2 utterances are the conversion results using the <u>source utterance</u> as source:
+        <ol start="3" type="a">
+            <li>
+                A synthetic utterance generated with the <u>authentic utterance</u> as target
+            </li>
+            <li>
+                A synthetic utterance generated with 5 randomly sampled utterances from the target speaker as target
+            </li>
+        </ol>
+
+        <h4>Pair 1</h4>
+        <dl class="row">
+            <dt class="col-sm-3">
+                Source speaker
+            </dt>
+            <dd class="col-sm-9">
+                p225
+            </dd>
+
+            <dt class="col-sm-3">
+                Target speaker
+            </dt>
+            <dd class="col-sm-9">
+                p227
+            </dd>
+
+            <dt class="col-sm-3">
+                Transcription
+            </dt>
+            <dd class="col-sm-9">
+                &#8220;
+                Ask her to bring these things with her from the store.
+                &#8221;
+            </dd>
+
+            <dt class="col-sm-3">
+                Source utterance
+            </dt>
+            <dd class="col-sm-9">
+                <audio controls>
+                    <source src="wavs/p225_002.wav">
+                    Your browser does not support the audio tag!
+                </audio>
+            </dd>
+
+            <dt class="col-sm-3">
+                Authentic utterance
+                <br>
+                <small>
+                    from the target speaker
+                </small>
+            </dt>
+            <dd class="col-sm-9">
+                <audio controls>
+                    <source src="wavs/p227_002.wav">
+                    Your browser does not support the audio tag!
+                </audio>
+            </dd>
+
+            <dt class="col-sm-3">
+                Conversion result
+                <br>
+                <small>
+                    with the authentic utterance as target
+                </small>
+            </dt>
+            <dd class="col-sm-9">
+                <audio controls>
+                    <source src="wavs/s2s-f2m-p225_002-p227_002.wav">
+                    Your browser does not support the audio tag!
+                </audio>
+                <br>
+                <img src="imgs/p225_p227/s2s-f2m-p225_002-p227_002.attn.png">
+            </dd>
+
+            <dt class="col-sm-3">
+                Conversion result
+                <br>
+                <small>
+                    with 5 randomly sampled target utterances
+                </small>
+            </dt>
+            <dd class="col-sm-9">
+                <audio controls>
+                    <source src="wavs/s2s-f2m-p225_002-p227_001_010_025_052_090.wav">
+                    Your browser does not support the audio tag!
+                </audio>
+                <br>
+                <img src="imgs/p225_p227/s2s-f2m-p225_002-p227_001_010_025_052_090.attn.png">
+            </dd>
+
+        </dl>
+
+        <!-- <h3>Unseen-to-unseen conversion</h3>
+
+        In the following sections, there are 4 conversion pairs, each containing 4 speech utterances.
+        The first 2 utterances are drawn from the CMU Arctic dataset:
+        <ol type="a">
+            <li>
+                An utterance from the source speaker, termed as <u>source utterance</u>
+            </li>
+            <li>
+                An utterance from the target speaker, which is of the same word transcription as the source utterance, termed as <u>authentic utterance</u>
+            </li>
+        </ol>
+
+        And the last one is the conversion result generated with the <u>source utterance</u> as source and 5 randomly sampled utterances from the target speaker as target. -->
     </div>
 
     <div class="container" style="padding-top: 60px;">

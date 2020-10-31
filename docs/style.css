@@ -1,11 +1,13 @@
+p {
+    text-align: justify;
+    text-justify: inter-word;
+}
 audio {
     border-radius: 0%;
 }
-table {
-    text-align: center;
-    border-collapse: collapse;
-    overflow: hidden!important;
-} 
-td,th {
-    border: none!important;
+img {
+    max-height:500px;
+    max-width: 100%;
+    height:auto;
+    width:auto;
 }
