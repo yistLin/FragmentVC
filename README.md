@@ -16,42 +16,27 @@ For the audio samples and attention map analyses, please refer to our [demo page
 
 ## Usage
 
+You can download the pretrained model as well as the vocoder following the link under **Releases** section on the sidebar.
+
+The whole project was developed using Python 3.8, torch 1.6, and the pretrained model as well as the vocoder were turned to [TorchScript](https://pytorch.org/docs/stable/jit.html), so it's not guaranteed to be backward compatible.
+You can install the dependencies with
+
+```bash
+pip install -r requirements.txt
+```
+
+If you encounter any problems while installing *fairseq*, please refer to [pytorch/fairseq](https://github.com/pytorch/fairseq) for the installation instruction.
+
+### Wav2Vec
+
 In our implementation, we're using Wav2Vec 2.0 Base w/o finetuning which is trained on LibriSpeech.
-You can download the checkpoint, [wav2vec_small.pt]((https://dl.fbaipublicfiles.com/fairseq/wav2vec/wav2vec_small.pt)) from [fairseq - wav2vec 2.0](https://github.com/pytorch/fairseq/blob/master/examples/wav2vec/README.md).
+You can download the checkpoint [wav2vec_small.pt](https://dl.fbaipublicfiles.com/fairseq/wav2vec/wav2vec_small.pt) from [pytorch/fairseq](https://github.com/pytorch/fairseq).
 
-### Preprocessing
+### Vocoder
 
-You can preprocess multiple corpora by passing multiple paths.
-But each path should be the directory that directly contains the speaker directories,
-i.e.
-```bash
-python preprocess.py \
-    VCTK-Corpus/wav48 \
-    LibriTTS/train-clean-360 \
-    <WAV2VEC_PATH> \
-    features  # the output directory of preprocessed features
-```
+The WaveRNN-based neural vocoder is from [yistLin/universal-vocoder](https://github.com/yistLin/universal-vocoder) which is based on the paper, [Towards achieving robust universal neural vocoding](https://arxiv.org/abs/1811.06292).
 
-After preprocessing, the output directory will be containing:
-```text
-metadata.json
-utterance-000x7gsj.tar
-utterance-00wq7b0f.tar
-utterance-01lpqlnr.tar
-...
-```
-
-### Training
-
-```bash
-python train.py features --save_dir ./ckpts
-```
-
-You can further specify `--preload` for preloading all training data into RAM to boost training speed.
-If `--comment <COMMENT>` is specified, e.g. `--comment vctk`, the training logs will be placed under a newly created directory like, `logs/2020-02-02_12:34:56_vctk`, otherwise there won't be any logging.
-For more details, you can refer to the usage by `python train.py -h`.
-
-### Voice conversion
+## Voice conversion with pretrained models
 
 You can convert an utterance from source speaker with multiple utterances from target speaker, e.g.
 ```bash
@@ -60,9 +45,9 @@ python convert.py \
     -v <VOCODER_PATH> \
     -c <CHECKPOINT_PATH> \
     VCTK-Corpus/wav48/p225/p225_001.wav \ # source utterance
-    VCTK-Corpus/wav48/p227/p227_002.wav \ # target utterances 1/3
-    VCTK-Corpus/wav48/p227/p227_003.wav \ # target utterances 2/3
-    VCTK-Corpus/wav48/p227/p227_004.wav \ # target utterances 3/3
+    VCTK-Corpus/wav48/p227/p227_002.wav \ # target utterance 1/3
+    VCTK-Corpus/wav48/p227/p227_003.wav \ # target utterance 2/3
+    VCTK-Corpus/wav48/p227/p227_004.wav \ # target utterance 3/3
     output.wav
 ```
 
@@ -101,3 +86,39 @@ pair2.mel.png
 pair2.attn.png
 ```
 where `*.wav` are the converted utterances, `*.mel.png` are the plotted mel-spectrograms of the formers, and `*.attn.png` are the attention map between *Conv1d 1* and *Extractor 3* (please refer to the model architecture above).
+
+## Train from scratch
+
+Emperically, if you train the model on the CSTR VCTK Corpus, it would take 1 hr to preprocess the data and around 12 hr to train to 200K steps (on an RTX 2080 Ti).
+
+### Preprocessing
+
+You can preprocess multiple corpora by passing multiple paths.
+But each path should be the directory that directly contains the speaker directories,
+i.e.
+```bash
+python preprocess.py \
+    VCTK-Corpus/wav48 \
+    LibriTTS/train-clean-360 \
+    <WAV2VEC_PATH> \
+    features  # the output directory of preprocessed features
+```
+
+After preprocessing, the output directory will be containing:
+```text
+metadata.json
+utterance-000x7gsj.tar
+utterance-00wq7b0f.tar
+utterance-01lpqlnr.tar
+...
+```
+
+### Training
+
+```bash
+python train.py features --save_dir ./ckpts
+```
+
+You can further specify `--preload` for preloading all training data into RAM to boost training speed.
+If `--comment <COMMENT>` is specified, e.g. `--comment vctk`, the training logs will be placed under a newly created directory like, `logs/2020-02-02_12:34:56_vctk`, otherwise there won't be any logging.
+For more details, you can refer to the usage by `python train.py -h`.
